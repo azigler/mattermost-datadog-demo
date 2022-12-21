@@ -1,0 +1,26 @@
+{
+  "name": "plantalytics",
+  "version": "0.1.0",
+  "description": "Example application for Mattermost and Datadog incident resolution demo",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon ."
+  },
+  "author": "Andrew Zigler",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/azigler/mattermost-datadog.git"
+  },
+  "bugs": {
+    "url": "https://github.com/azigler/mattermost-datadog/issues",
+    "email": "andrewzigler@gmail.com"
+  },
+  "dependencies": {
+    "@hapi/hapi": "^21.1.0",
+    "nodemon": "^2.0.20"
+  }
+}

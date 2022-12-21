@@ -1,0 +1,7 @@
+containers/**
+!containers/plantalytics
+!containers/plantalytics/**
+
+node_modules
+.TODO
+.DS_Store

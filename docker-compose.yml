@@ -1,0 +1,103 @@
+---
+version: "3.9"
+networks:
+  default:
+    name: mattermost-datadog-demo
+services:
+  mattermost:
+    container_name: mattermost
+    image: mattermost/mattermost-team-edition:latest
+    restart: unless-stopped
+    user: 0:0
+    depends_on:
+      - postgres
+    environment:
+      - TZ=UTC
+      - MM_SQLSETTINGS_DRIVERNAME=postgres
+      - MM_SQLSETTINGS_DATASOURCE=postgres://postgres:postgres_root@postgres:5432/mattermost?sslmode=disable&connect_timeout=10
+      - MM_SERVICESETTINGS_SITEURL=http://mattermost:8065
+      - MM_SERVICESETTINGS_ENABLEUSERACCESSTOKENS=true
+      - MM_SERVICESETTINGS_ENABLEBOTACCOUNTCREATION=true
+      - MM_SERVICESETTINGS_ENABLEOAUTHSERVICEPROVIDER=true
+      - MM_SERVICESETTINGS_ENABLEDEVELOPER=true
+      - MM_SERVICESETTINGS_ENABLETESTING=true
+      - MM_PLUGINSETTINGS_AUTOMATICPREPACKAGEDPLUGINS=true
+      - MM_EXPERIMENTALSETTINGS_ENABLEAPPBAR=true
+      - MM_PLUGINSETTINGS_ENABLEUPLOADS=true
+      - MM_LOGSETTINGS_CONSOLELEVEL=DEBUG
+      - MM_LOGSETTINGS_FILELEVEL=DEBUG
+      - MM_FILESETTINGS_MAXFILESIZE=123524266
+      - MM_FEATUREFLAGS_AppsEnabled=true
+      - MM_FEATUREFLAGS_PluginApps=1.2.0
+    volumes:
+      - ./containers/mattermost/config:/mattermost/config
+      - ./containers/mattermost/data:/mattermost/data
+      - ./containers/mattermost/logs:/mattermost/logs
+      - ./containers/mattermost/plugins:/mattermost/plugins
+      - ./containers/mattermost/client/plugins:/mattermost/client/plugins
+    ports:
+      - 8065:8065
+  postgres:
+    container_name: postgres
+    image: postgres:latest
+    restart: unless-stopped
+    environment:
+      - TZ=UTC
+      - POSTGRES_PASSWORD=postgres_root
+      - POSTGRES_DB=mattermost
+    volumes:
+      - ./containers/postgres/data:/var/lib/postgresql/data
+      - ./containers/postgres/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+  redis:
+    container_name: redis
+    image: redis:latest
+    restart: unless-stopped
+    command: redis-server --save 60 1 --loglevel warning
+    volumes:
+      - ./containers/redis:/data
+  datadog:
+    container_name: datadog
+    image: gcr.io/datadoghq/agent:7
+    restart: unless-stopped
+    environment:
+      - DD_API_KEY=${DD_API_KEY:?err}
+      - DD_SITE=datadoghq.com
+      - DD_LOGS_ENABLED=true
+      - DD_LOGS_CONFIG_CONTAINER_COLLECT_ALL=true
+      - DD_PROCESS_AGENT_ENABLED=true
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /proc/:/host/proc/:ro
+      - /sys/fs/cgroup/:/host/sys/fs/cgroup:ro
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+  healthchecks:
+    image: lscr.io/linuxserver/healthchecks
+    container_name: healthchecks
+    restart: unless-stopped
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - SITE_ROOT=http://localhost:8000
+      - SITE_NAME=Healthchecks
+      - DEFAULT_FROM_EMAIL=me@example.com
+      - EMAIL_HOST=example.com
+      - EMAIL_PORT=25
+      - EMAIL_HOST_USER=me
+      - EMAIL_HOST_PASSWORD=healthchecks
+      - EMAIL_USE_TLS=False
+      - SUPERUSER_EMAIL=me@example.com
+      - SUPERUSER_PASSWORD=healthchecks
+    ports:
+      - 8000:8000
+    volumes:
+      - ./containers/healthchecks:/config
+  plantalytics:
+    container_name: plantalytics
+    image: node:lts-hydrogen
+    restart: unless-stopped
+    working_dir: /plantalytics
+    command: bash -c "yarn install && yarn start"
+    ports:
+      - 8005:8005
+    volumes:
+      - ./containers/plantalytics:/plantalytics
