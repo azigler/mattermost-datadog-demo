@@ -28,7 +28,7 @@ services:
       - MM_LOGSETTINGS_FILELEVEL=DEBUG
       - MM_FILESETTINGS_MAXFILESIZE=123524266
       - MM_FEATUREFLAGS_AppsEnabled=true
-      - MM_FEATUREFLAGS_PluginApps=1.2.0
+      - MM_FEATUREFLAGS_PluginApps=1.1.0
     volumes:
       - ./containers/mattermost/config:/mattermost/config
       - ./containers/mattermost/data:/mattermost/data

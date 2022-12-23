@@ -9,9 +9,9 @@ const init = async () => {
   server.route({
     method: "GET",
     path: "/",
-    handler: (request, h) => {
+    handler: () => {
       console.info("almost out of plants")
-      return "Hello World!"
+      return "Hello Worldlol!"
     },
   })
 
