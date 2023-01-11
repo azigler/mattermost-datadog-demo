@@ -9,6 +9,7 @@
   "private": false,
   "scripts": {
     "start": "docker compose up -d",
-    "stop": "docker compose down"
+    "stop": "docker compose down",
+    "setup": "sh ./scripts/init.sh"
   }
 }

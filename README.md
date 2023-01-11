@@ -32,7 +32,7 @@ Back in your terminal:
 yarn start
 ```
 
-Gitpod will automatically open browser pages to Mattermost and the demo application.
+Gitpod will automatically open browser pages to Mattermost and the demo application. Your browser may block the new tabs from automatically opening, but you can click the Ports tab at the bottom to find both service URLs that are unique to your Gitpod deployment.
 
 ### Mattermost
 
