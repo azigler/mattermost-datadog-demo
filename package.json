@@ -8,7 +8,7 @@
   "license": "MIT",
   "private": false,
   "scripts": {
-    "start": "docker compose up -d",
+    "start": "echo 'Please enter your DD_API_KEY (https://github.com/azigler/mattermost-datadog-demo#install--usage):' && read DD_API_KEY && docker compose up -d",
     "stop": "docker compose down",
     "setup": "sh ./scripts/init.sh"
   }
