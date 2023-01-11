@@ -4,15 +4,15 @@ echo "Initializing Mattermost for demo..."
 
 sleep 25
 
-docker exec mattermost mmctl --local user create --username root --password-file /credentials/root.txt --email example@test.com --system-admin --email-verified
+docker exec mattermost mmctl --local user create --username root --password mattermost --email example@test.com --system-admin --email-verified
 docker exec mattermost mmctl --local team create --display-name "Plantalytics, Inc." --name main
 docker exec mattermost mmctl --local channel create --team main --display-name "Datadog Alerts" --name datadog-alerts
 docker exec mattermost mmctl --local team users add main root
 docker exec mattermost mmctl --local channel users add main:datadog-alerts root
 
-GP_URL="$(gp url)"
+export GP_URL="$(gp url)"
 
-docker exec mattermost mmctl --local user create --username zeke --password-file /credentials/zeke.txt --email zeke@test.com --email-verified
+docker exec mattermost mmctl --local user create --username zeke --password zekemattermost --email zeke@test.com --email-verified
 docker exec mattermost mmctl --local team users add main zeke
 docker exec mattermost mmctl --local channel users add main:datadog-alerts zeke
 
