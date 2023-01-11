@@ -29,7 +29,7 @@ Back in your terminal:
 - Start the demo:
 
 ```
-docker compose up
+yarn start
 ```
 
 Gitpod will automatically open browser pages to Mattermost and the demo application.
