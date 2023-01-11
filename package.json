@@ -1,0 +1,14 @@
+{
+  "name": "mattermost-datadog-demo",
+  "version": "1.0.0",
+  "description": "Mattermost and Datadog incident resolution demo",
+  "main": "index.js",
+  "repository": "https://github.com/azigler/mattermost-datadog-demo.git",
+  "author": "Andrew Zigler <andrewzigler@gmail.com>",
+  "license": "MIT",
+  "private": false,
+  "scripts": {
+    "start": "docker compose up -d",
+    "stop": "docker compose down"
+  }
+}

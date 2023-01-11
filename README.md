@@ -4,25 +4,19 @@
 
 ## Background
 
-This is a multi-container Docker deployment featuring the following services:
+This is a multi-container Docker deployment for usage on Gitpod, featuring the following services:
 
 - [Mattermost](https://mattermost.com/) (secure collaboration)
 - [Postgres](https://hub.docker.com/_/postgres) (database)
-- [Redis](https://hub.docker.com/_/redis) (database)
 - [Datadog Agent](https://hub.docker.com/r/datadog/agent) (monitoring for Datadog)
-- [Healthchecks](https://hub.docker.com/r/linuxserver/healthchecks) (cron job monitoring)
 
 In addition to the above stack, this orchestration has a demonstrative application called `plantalytics` that is triaged by the demo user.
 
-## Install
+## Install & Usage
 
-You need the latest version of [Docker Desktop](https://docs.docker.com/desktop/) (Windows, Mac, or Linux desktop application) or [Docker Engine](https://docs.docker.com/engine/) (CLI) installed with [Docker Compose](https://docs.docker.com/compose/).
+This demo is built to be self-guided on Gitpod. To get your own workspace and start the demo, click below:
 
-Enter the following commands in a terminal:
-
-```
-git clone https://github.com/azigler/mattermost-datadog-demo && cd mattermost-datadog-demo
-```
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/azigler/mattermost-datadog-demo)
 
 On the [Datadog website](https://app.datadoghq.com/):
 
@@ -38,15 +32,9 @@ Back in your terminal:
 docker compose up
 ```
 
-Now you can access each container at their address below.
-
-## Usage
-
-To start:
+Gitpod will automatically open browser pages to Mattermost and the demo application.
 
 ### Mattermost
-
-http://localhost:8065
 
 - Create an admin user and default team
 
@@ -54,14 +42,6 @@ http://localhost:8065
 
 ... instructions coming soon ...
 
-### Healthchecks
-
-http://localhost:8000
-
-- Create Mattermost integration (use `mattermost` instead of `localhost`)
-
 ### `plantalytics`
-
-http://localhost:8005
 
 ... instructions coming soon ...

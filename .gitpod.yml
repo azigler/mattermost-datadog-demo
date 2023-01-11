@@ -1,0 +1,10 @@
+tasks:
+  - init: yarn start
+    command: yarn run start
+ports:
+  - port: 8065
+    onOpen: open-preview
+    visibility: public
+  - port: 8005
+    onOpen: open-preview
+    visibility: public

@@ -48,13 +48,6 @@ services:
     volumes:
       - ./containers/postgres/data:/var/lib/postgresql/data
       - ./containers/postgres/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
-  redis:
-    container_name: redis
-    image: redis:latest
-    restart: unless-stopped
-    command: redis-server --save 60 1 --loglevel warning
-    volumes:
-      - ./containers/redis:/data
   datadog:
     container_name: datadog
     image: gcr.io/datadoghq/agent:7
@@ -70,27 +63,6 @@ services:
       - /proc/:/host/proc/:ro
       - /sys/fs/cgroup/:/host/sys/fs/cgroup:ro
       - /var/lib/docker/containers:/var/lib/docker/containers:ro
-  healthchecks:
-    image: lscr.io/linuxserver/healthchecks
-    container_name: healthchecks
-    restart: unless-stopped
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - SITE_ROOT=http://localhost:8000
-      - SITE_NAME=Healthchecks
-      - DEFAULT_FROM_EMAIL=me@example.com
-      - EMAIL_HOST=example.com
-      - EMAIL_PORT=25
-      - EMAIL_HOST_USER=me
-      - EMAIL_HOST_PASSWORD=healthchecks
-      - EMAIL_USE_TLS=False
-      - SUPERUSER_EMAIL=me@example.com
-      - SUPERUSER_PASSWORD=healthchecks
-    ports:
-      - 8000:8000
-    volumes:
-      - ./containers/healthchecks:/config
   plantalytics:
     container_name: plantalytics
     image: node:lts-hydrogen
