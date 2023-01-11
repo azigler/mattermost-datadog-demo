@@ -2,7 +2,7 @@
 
 echo "Initializing Mattermost for demo..."
 
-sleep 5
+sleep 25
 
 docker exec mattermost mmctl --local user create --username root --password-file /credentials/root.txt --email example@test.com --system-admin --email-verified
 docker exec mattermost mmctl --local team create --display-name "Plantalytics, Inc." --name main
