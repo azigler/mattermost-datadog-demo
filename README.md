@@ -16,7 +16,7 @@ In addition to the above stack, this orchestration has a demonstrative applicati
 
 This demo is built to be self-guided on Gitpod. To get your own workspace and start the demo, click below:
 
-[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/azigler/mattermost-datadog-demo)
+<a href="https://gitpod.io/#https://github.com/azigler/mattermost-datadog-demo" target="_blank">![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)</a>
 
 On the [Datadog website](https://app.datadoghq.com/):
 
