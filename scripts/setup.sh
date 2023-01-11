@@ -20,17 +20,17 @@ echo "\n  YOU CAN NOW LOG IN TO MATTERMOST AT $MM_URL\n        username:  root\n
 
 docker exec mattermost mmctl auth login $MM_URL --name zeke --username zeke --password-file /credentials/zeke.txt
 
-docker exec mattermost mmctl post create main:off-topic --message "Hey @root, it's me, Zeke! I'm so glad you're finally here. Can you help us set up alerts for our new API? I'm going to move discussion over to [Datadog Alerts channel]($MM_URL/main/channels/datadog-alerts) to reduce noise here..."
+docker exec mattermost mmctl post create main:town-square --message "Hey @root, it's me, Zeke! We're so glad you're finally here. Can you help us set up alerts with the new Datadog Agent monitoring our containers? I'm going to move discussion over to [Datadog Alerts channel]($MM_URL/main/channels/datadog-alerts) to reduce noise here..."
 
-sleep 5
+sleep 10
 
-docker exec mattermost mmctl post create main:datadog-alerts --message "Yay, you're here! :tada: To get started, log into your Datadog account and navigate to the **[Integrations > Webhooks](https://app.datadoghq.com/integrations/webhooks)** page. The alert we need to create is for the \`plantalytics\` API we just rolled out. If the API encounters some edge cases that ours engineers have identified, we want to get notified so we can investigate the causes."
+docker exec mattermost mmctl post create main:datadog-alerts --message "Hey @root, over here! :) :tada: To get started, log into your Datadog account and navigate to the **[Integrations > Webhooks](https://app.datadoghq.com/integrations/webhooks)** page. The alert we need to create is for the \`plantalytics\` API we just rolled out. If the API encounters some edge cases that ours engineers have identified, we want to get notified so we can investigate the causes."
 
-sleep 2
+sleep 10
 
 docker exec mattermost mmctl post create main:datadog-alerts --message "First, **[create a new incoming webhook in Mattermost for this channel]($MM_URL/main/integrations/incoming_webhooks/add)** and copy its URL."
 
-sleep 5
+sleep 15
 
 docker exec mattermost mmctl post create main:datadog-alerts --message "Next, **create a new webhook on Datadog** and name it \`mattermost-integration\`. You can paste in the webhook URL. For the payload, let's use a formatted message attachment in Mattermost:
 
@@ -69,3 +69,19 @@ docker exec mattermost mmctl post create main:datadog-alerts --message "Next, **
   ]
 }
 \`\`\`"
+
+docker exec mattermost mmctl post create main:datadog-alerts --message "Next, navigate to the **[Monitors > New Monitor > Logs](https://app.datadoghq.com/monitors/create/log)** page to create this new log monitor. The Datadog Agent is already online and scanning our containers, you check out the \`docker-compose.yml\` file in the repo to see how it's configured but that's not necessary for now."
+
+sleep 15
+
+docker exec mattermost mmctl post create main:datadog-alerts --message "In **Define the search query**, you can start typing \`container_name:\` and it'll suggest the running containers. We want to monitor \`container_name:plantalytics\` so type that in. After that selector, enter the plain text we want to look for with the monitor. Let's add \"almost out of plants\" so now the field says \`container_name:plantalytics almost out of plants\`."
+
+sleep 15
+
+docker exec mattermost mmctl post create main:datadog-alerts --message "Under **Set alert conditions**, change it to be \`above or equal to\` and set the **Alert Threshold** to \`1\`"
+
+sleep 15
+
+docker exec mattermost mmctl post create main:datadog-alerts --message "Under **Notify your team**, set the monitor title to whatever you like and in the body add \`@mattermost-integration\` so that this monitor sends the alert we formatted for this channel. You should test the notification to make sure it sends here, then save it."
+
+sleep 15
