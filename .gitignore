@@ -1,6 +1,8 @@
 containers/**
 !containers/plantalytics
 !containers/plantalytics/**
+!containers/mattermost
+!containers/mattermost/password.txt
 
 node_modules
 .TODO
