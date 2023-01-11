@@ -31,7 +31,7 @@ Back in your terminal:
 yarn start
 ```
 
-Gitpod will automatically open browser pages to Mattermost and the demo application. Your browser may block the new tabs from automatically opening, but you can click the **Ports** tab at the bottom to find both service URLs that are unique to your Gitpod deployment.
+Gitpod will request your Datadog API key then automatically open browser pages to Mattermost and the demo application once everything builds. Your browser may block the new tabs from automatically opening, but you can click the **Ports** tab at the bottom to find both service URLs that are unique to your Gitpod deployment.
 
 The script will create and share your Mattermost login credentials. Next, navigate to your Mattermost server and log in.
 

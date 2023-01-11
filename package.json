@@ -9,7 +9,7 @@
   "private": false,
   "scripts": {
     "start": "echo 'Please enter your DD_API_KEY (https://github.com/azigler/mattermost-datadog-demo#install--usage):' && read ddkey && export DD_API_KEY=$ddkey && docker compose up -d",
-    "stop": "docker compose down",
-    "setup": "sh ./scripts/init.sh"
+    "stop": "export DD_API_KEY=0 && docker compose down",
+    "setup": "sh ./scripts/setup.sh"
   }
 }
