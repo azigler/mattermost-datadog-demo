@@ -1,5 +1,6 @@
 tasks:
   - name: Install & Setup
+    init: nvm install lts/hydrogen && nvm use lts/hydrogen
     command: yarn install
     openMode: "split-left"
   - name: Start
