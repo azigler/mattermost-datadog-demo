@@ -49,8 +49,5 @@ for user in * ; do
     docker exec mattermost mmctl --local team users add $team_name $user
     docker exec mattermost mmctl --local channel users add $team_name:$channel_name $user
 
-    echo $user
-    echo $pwd
-
-    docker exec mattermost mmctl auth login $MM_URL --name $user --username $user --password-file ./$user/password.txt
+    docker exec mattermost mmctl auth login $MM_URL --name $user --username $user --password-file /rooster/data/users/$user/password.txt
 done
