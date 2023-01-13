@@ -36,7 +36,7 @@ docker exec mattermost mmctl --local user create --username $user_name --passwor
 docker exec mattermost mmctl --local team users add $team_name $user_name
 
 export MM_URL="$(gp url 8065)"
-echo "\n\n  YOU CAN NOW LOG IN TO MATTERMOST AT $GP_URL:8065\n        username:  $user_name\n        password:  $password\n"
+echo "\n\n  YOU CAN NOW LOG IN TO MATTERMOST AT $MM_URL:8065\n        username:  $user_name\n        password:  $user_password\n"
 
 cd data/users
 
@@ -48,6 +48,9 @@ for user in * ; do
     docker exec mattermost mmctl --local user create --username $user --password $pw --email $user@$team_name.com --system-admin --email-verified
     docker exec mattermost mmctl --local team users add $team_name $user
     docker exec mattermost mmctl --local channel users add $team_name:$channel_name $user
+
+    echo $user
+    echo $pwd
 
     docker exec mattermost mmctl auth login $MM_URL --name $user --username $user --password-file ./$user/password.txt
 done
