@@ -24,6 +24,9 @@ while getopts 'tdciup:v' flag; do
   esac
 done
 
+echo "Initializing Mattermost for demo..."
+sleep 25
+
 echo "Setting up Mattermost with ...\n Team name: $team_name\n Team display name: $team_display_name\n Channel name: $channel_name\n Channel display name: $channel_display_name"
 docker exec mattermost mmctl --local team create --display-name $team_display_name --name $team_name
 docker exec mattermost mmctl --local channel create --team $team_name --display-name $channel_display_name --name $channel_name
@@ -32,7 +35,7 @@ echo "Initializing admin account ...\n User name: $user_name\n User password: $u
 docker exec mattermost mmctl --local user create --username $user_name --password $user_password --email $user_name@test.com --system-admin --email-verified
 docker exec mattermost mmctl --local team users add $team_name $user_name
 
-cd users
+cd ./rooster/users
 
 for user in * ; do
     pw="$(openssl rand -base64 14)"
