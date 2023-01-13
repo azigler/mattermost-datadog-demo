@@ -1,8 +1,6 @@
 tasks:
-  - init: yarn start
-    command: |
-      gp ports await 8065
-      yarn setup
+  - name: Install & Setup
+    init: yarn install
 ports:
   - port: 8065
     onOpen: open-browser
