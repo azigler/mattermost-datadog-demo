@@ -41,6 +41,7 @@ for user in * ; do
     pw="$(openssl rand -base64 14)"
     echo "Initializing demo user $user with password $pw..."
     docker exec mattermost mmctl --local user create --username $user --password $pw --email $user@test.com --system-admin --email-verified
-    docker exec mattermost mmctl --local team users add $team_name $user_name
+    docker exec mattermost mmctl --local team users add $team_name $user
+    sleep 1
     docker exec mattermost mmctl --local channel users add $team_name:$channel_name $user
 done
