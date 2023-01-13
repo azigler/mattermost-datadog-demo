@@ -25,6 +25,7 @@ while getopts 'tdciup:v' flag; do
 done
 
 echo "Initializing Mattermost for demo..."
+sleep 25
 
 echo "Setting up Mattermost with ...\n Team name: $team_name\n Team display name: $team_display_name\n Channel name: $channel_name\n Channel display name: $channel_display_name"
 docker exec mattermost mmctl --local team create --display-name $team_display_name --name $team_name
