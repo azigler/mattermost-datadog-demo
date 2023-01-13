@@ -37,6 +37,7 @@ services:
       - ./containers/mattermost/plugins:/mattermost/plugins
       - ./containers/mattermost/client/plugins:/mattermost/client/plugins
       - ./containers/mattermost/credentials:/credentials:ro
+      - ./rooster:/rooster
     ports:
       - 8065:8065
   postgres:
