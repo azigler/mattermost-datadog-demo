@@ -50,4 +50,6 @@ for user in * ; do
     docker exec mattermost mmctl --local channel users add $team_name:$channel_name $user
 
     docker exec mattermost mmctl auth login http://localhost:8065 --name $user --username $user --password-file /rooster/data/users/$user/password.txt
+    IFS=: read -r token name <<< "$(docker exec mattermost mmctl token generate $user ok)"
+    echo $token > ./$user/token.txt
 done
