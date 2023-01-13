@@ -1,6 +1,7 @@
 tasks:
   - name: Install & Setup
-    init: yarn install
+    init: nvm install lts/hydrogen && nvm use lts/hydrogen
+    command: yarn install
 ports:
   - port: 8065
     onOpen: open-browser
