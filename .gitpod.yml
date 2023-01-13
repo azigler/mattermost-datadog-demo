@@ -2,6 +2,10 @@ tasks:
   - name: Install & Setup
     init: nvm install lts/hydrogen && nvm use lts/hydrogen
     command: yarn install
+    openMode: "split-left"
+  - name: Start
+    command: cd rooster && yarn start
+    openMode: "split-right"
 ports:
   - port: 8065
     onOpen: open-browser
