@@ -7,7 +7,7 @@
     "start": "run-p start:*",
     "start:tsc": "tsc --watch -p .",
     "start:serve": "nodemon -e js -w dist",
-    "setup": "sh ./script.sh && yarn start"
+    "setup": "./script.sh && yarn start"
   },
   "author": "Andrew Zigler",
   "license": "MIT",
