@@ -28,6 +28,27 @@ function read(filepath: string, json = true) {
   }
 }
 
+function matterFetch(endpoint: string, token: string) {
+  const api = `${MM_URL}/api/v4/`
+  const f = async () => {
+    console.log(`${api}${endpoint}`, token)
+    const data = await fetch(`${api}${endpoint}`, {
+      headers: new Headers({
+        Authorization: `Bearer ${token}`,
+      }),
+    })
+    console.log(await data.text())
+    if (data.status === 200) {
+      const final = await data.text()
+      console.log(final)
+    } else {
+      return false
+    }
+  }
+  const ret = f()
+  console.log(ret)
+}
+
 class Action {
   type: string
   channel: string
@@ -84,18 +105,9 @@ class User {
 
     if (token) {
       this.token = token
-      // set prof pic
+      // set prof pick
 
-      const test = async () => {
-        const data = await fetch(`${MM_URL}/api/v4/users/me`, {
-          headers: new Headers({
-            Authorization: `Bearer ${token}`,
-          }),
-        })
-        console.log(data)
-      }
-
-      test()
+      const dog = matterFetch("users/me", token)
     } else {
       this.token = false
     }

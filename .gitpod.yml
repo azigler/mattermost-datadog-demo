@@ -4,7 +4,7 @@ tasks:
     command: yarn install
     openMode: "split-left"
   - name: Start
-    init: sleep 5 && nvm use lts/hydrogen
+    init: sleep 40 && nvm use lts/hydrogen
     command: cd rooster && yarn install && yarn start
     openMode: "split-right"
 ports:

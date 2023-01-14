@@ -57,6 +57,27 @@ function read(filepath, json = true) {
         return contents;
     }
 }
+function matterFetch(endpoint, token) {
+    const api = `${MM_URL}/api/v4/`;
+    const f = () => __awaiter(this, void 0, void 0, function* () {
+        console.log(`${api}${endpoint}`, token);
+        const data = yield fetch(`${api}${endpoint}`, {
+            headers: new Headers({
+                Authorization: `Bearer ${token}`,
+            }),
+        });
+        console.log(yield data.text());
+        if (data.status === 200) {
+            const final = yield data.text();
+            console.log(final);
+        }
+        else {
+            return false;
+        }
+    });
+    const ret = f();
+    console.log(ret);
+}
 class Action {
     constructor(props) {
         this.type = props.type;
@@ -90,16 +111,8 @@ class User {
         }
         if (token) {
             this.token = token;
-            // set prof pic
-            const test = () => __awaiter(this, void 0, void 0, function* () {
-                const data = yield fetch(`${MM_URL}/api/v4/users/me`, {
-                    headers: new Headers({
-                        Authorization: `Bearer ${token}`,
-                    }),
-                });
-                console.log(data);
-            });
-            test();
+            // set prof pick
+            const dog = matterFetch("users/me", token);
         }
         else {
             this.token = false;
