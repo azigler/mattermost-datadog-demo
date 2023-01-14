@@ -8,7 +8,7 @@ user_name="root"
 user_password="$(openssl rand -base64 14)"
 
 print_usage() {
-  printf " -t     Team name\n -d     Team display name\n -c     Channel name\n -i     Channel display name\n -u     User name\n -p     User password\n"
+  printf "\nrooster :: user roster generator for Mattermost\n\n Valid arguments:\n\n  -t <name>   Team name              (default: main)\n  -d <name>   Team display name      (default: Mattermost)\n  -c <name>   Channel name           (default: example)\n  -i <name>   Channel display name   (default: Example)\n  -u <name>   User name              (default: root)\n  -p <pass>   User password          (default is generated and printed)\n\n"
 }
 
 while getopts 'tdciup:v' flag; do
@@ -50,6 +50,32 @@ for user in * ; do
     docker exec mattermost mmctl --local channel users add $team_name:$channel_name $user
 
     docker exec mattermost mmctl auth login http://localhost:8065 --name $user --username $user --password-file /rooster/data/users/$user/password.txt
-    IFS=: read -r token name <<< "$(docker exec mattermost mmctl token generate $user ok)"
+    IFS=: read -r token name <<< "$(docker exec mattermost mmctl token generate $user demo)"
     echo $token > ./$user/token.txt
 done
+
+
+Initializing Mattermost for demo...
+Setting up Mattermost with ...
+ Team name: main
+ Team display name: Mattermost
+ Channel name: example
+ Channel display name: Example
+New team main successfully created
+New channel example successfully created
+Initializing your admin account ...
+
+ User name: root
+ User password: HFCrmE8iKSP1pYgn4Pk=
+
+Created user root
+
+
+  YOU CAN NOW LOG IN TO MATTERMOST AT https://8065-azigler-mattermostdatad-2ex6xwzqy92.ws-us82.gitpod.io
+        username:  root
+        password:  HFCrmE8iKSP1pYgn4Pk=
+
+Initializing demo user zeek with password hKvuJVT1tl1HqRxXlNU=...
+Created user zeek
+
+  credentials for "zeek": "zeek@http://localhost:8065" stored
