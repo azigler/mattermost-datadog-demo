@@ -4,13 +4,13 @@ tasks:
     command: yarn install
     openMode: "split-left"
   - name: Start
-    init: sleep 40 && nvm use lts/hydrogen
+    init: sleep 65 && nvm use lts/hydrogen
     command: cd rooster && yarn install && yarn start
     openMode: "split-right"
 ports:
   - port: 8065
-    onOpen: open-browser
+    onOpen: open-preview
     visibility: public
   - port: 8005
-    onOpen: open-browser
+    onOpen: open-preview
     visibility: public

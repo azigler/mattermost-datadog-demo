@@ -59,24 +59,37 @@ function read(filepath, json = true) {
 }
 function matterFetch(endpoint, token) {
     const api = `${MM_URL}/api/v4/`;
-    const f = () => __awaiter(this, void 0, void 0, function* () {
-        console.log(`${api}${endpoint}`, token);
+    fetch(`${api}${endpoint}`, {
+        headers: new Headers({
+            Authorization: `Bearer ${token}`,
+        }),
+    }).then((data) => {
+        if (data.status === 200) {
+            return data.text().then((final) => {
+                return final;
+            });
+        }
+        else {
+            return "";
+        }
+    });
+}
+function matterFetch2(endpoint, token) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const api = `${MM_URL}/api/v4/`;
         const data = yield fetch(`${api}${endpoint}`, {
             headers: new Headers({
                 Authorization: `Bearer ${token}`,
             }),
         });
-        console.log(yield data.text());
         if (data.status === 200) {
-            const final = yield data.text();
-            console.log(final);
+            const text = yield data.text();
+            return text;
         }
         else {
             return false;
         }
     });
-    const ret = f();
-    console.log(ret);
 }
 class Action {
     constructor(props) {
@@ -111,12 +124,17 @@ class User {
         }
         if (token) {
             this.token = token;
-            // set prof pick
-            const dog = matterFetch("users/me", token);
+            // set prof pic
+            this.fetchMe(token);
         }
         else {
             this.token = false;
         }
+    }
+    fetchMe(token) {
+        return __awaiter(this, void 0, void 0, function* () {
+            console.log(yield matterFetch2("users/me", token));
+        });
     }
 }
 const test = new User({

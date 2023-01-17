@@ -30,23 +30,35 @@ function read(filepath: string, json = true) {
 
 function matterFetch(endpoint: string, token: string) {
   const api = `${MM_URL}/api/v4/`
-  const f = async () => {
-    console.log(`${api}${endpoint}`, token)
-    const data = await fetch(`${api}${endpoint}`, {
-      headers: new Headers({
-        Authorization: `Bearer ${token}`,
-      }),
-    })
-    console.log(await data.text())
+  fetch(`${api}${endpoint}`, {
+    headers: new Headers({
+      Authorization: `Bearer ${token}`,
+    }),
+  }).then((data) => {
     if (data.status === 200) {
-      const final = await data.text()
-      console.log(final)
+      return data.text().then((final) => {
+        return final
+      })
     } else {
-      return false
+      return ""
     }
+  })
+}
+
+async function matterFetch2(endpoint: string, token: string) {
+  const api = `${MM_URL}/api/v4/`
+  const data = await fetch(`${api}${endpoint}`, {
+    headers: new Headers({
+      Authorization: `Bearer ${token}`,
+    }),
+  })
+
+  if (data.status === 200) {
+    const text = await data.text()
+    return text
+  } else {
+    return false
   }
-  const ret = f()
-  console.log(ret)
 }
 
 class Action {
@@ -105,12 +117,16 @@ class User {
 
     if (token) {
       this.token = token
-      // set prof pick
+      // set prof pic
 
-      const dog = matterFetch("users/me", token)
+      this.fetchMe(token)
     } else {
       this.token = false
     }
+  }
+
+  async fetchMe(token: string) {
+    console.log(await matterFetch2("users/me", token))
   }
 }
 

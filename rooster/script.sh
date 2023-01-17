@@ -34,6 +34,7 @@ docker exec mattermost mmctl --local channel create --team $team_name --display-
 echo -e "Initializing your admin account ...\n\n User name: $user_name\n User password: $user_password\n"
 docker exec mattermost mmctl --local user create --username $user_name --password $user_password --email $user_name@$team_name.com --system-admin --email-verified
 docker exec mattermost mmctl --local team users add $team_name $user_name
+docker exec mattermost mmctl --local channel users add $team_name:$channel_name $user_name
 
 export MM_URL="$(gp url 8065)"
 echo -e "\n\n  YOU CAN NOW LOG IN TO MATTERMOST AT $MM_URL\n        username:  $user_name\n        password:  $user_password\n"
@@ -53,29 +54,3 @@ for user in * ; do
     IFS=: read -r token name <<< "$(docker exec mattermost mmctl token generate $user demo)"
     echo $token > ./$user/token.txt
 done
-
-
-Initializing Mattermost for demo...
-Setting up Mattermost with ...
- Team name: main
- Team display name: Mattermost
- Channel name: example
- Channel display name: Example
-New team main successfully created
-New channel example successfully created
-Initializing your admin account ...
-
- User name: root
- User password: HFCrmE8iKSP1pYgn4Pk=
-
-Created user root
-
-
-  YOU CAN NOW LOG IN TO MATTERMOST AT https://8065-azigler-mattermostdatad-2ex6xwzqy92.ws-us82.gitpod.io
-        username:  root
-        password:  HFCrmE8iKSP1pYgn4Pk=
-
-Initializing demo user zeek with password hKvuJVT1tl1HqRxXlNU=...
-Created user zeek
-
-  credentials for "zeek": "zeek@http://localhost:8065" stored
