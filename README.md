@@ -10,7 +10,7 @@ This is a multi-container Docker deployment for usage on Gitpod, featuring the f
 - [Postgres](https://hub.docker.com/_/postgres) (database)
 - [Datadog Agent](https://hub.docker.com/r/datadog/agent) (monitoring for Datadog)
 
-In addition to the above stack, this orchestration has a demonstrative application called `plantalytics` that is triaged by the demo user.
+In addition to the above stack, this orchestration has a demonstrative application called `verdantics` that is triaged by the demo user.
 
 ## Install & Usage
 
@@ -43,6 +43,6 @@ The script will create and share your Mattermost login credentials. Next, naviga
 
 ... instructions coming soon ...
 
-### `plantalytics`
+### `verdantics`
 
 ... instructions coming soon ...
