@@ -30,7 +30,7 @@ echo "Initializing Mattermost for demo..."
 sleep 35
 
 docker exec mattermost mmctl --local team create --display-name $team_display_name --name $team_name
-docker exec mattermost mmctl --local channel create --team $team_name --display-name '$channel_display_name' --name $channel_name
+docker exec mattermost mmctl --local channel create --team $team_name --display-name "$channel_display_name" --name $channel_name
 
 echo -e "Initializing your admin account ...\n\n User name: $user_name\n User password: $user_password\n"
 docker exec mattermost mmctl --local user create --username $user_name --password $user_password --email $user_name@$team_name.com --system-admin --email-verified

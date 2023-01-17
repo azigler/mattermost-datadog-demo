@@ -28,24 +28,7 @@ function read(filepath: string, json = true) {
   }
 }
 
-function matterFetch(endpoint: string, token: string) {
-  const api = `${MM_URL}/api/v4/`
-  fetch(`${api}${endpoint}`, {
-    headers: new Headers({
-      Authorization: `Bearer ${token}`,
-    }),
-  }).then((data) => {
-    if (data.status === 200) {
-      return data.text().then((final) => {
-        return final
-      })
-    } else {
-      return ""
-    }
-  })
-}
-
-async function matterFetch2(endpoint: string, token: string) {
+async function matterFetch(endpoint: string, token: string) {
   const api = `${MM_URL}/api/v4/`
   const data = await fetch(`${api}${endpoint}`, {
     headers: new Headers({
@@ -126,7 +109,7 @@ class User {
   }
 
   async fetchMe(token: string) {
-    console.log(await matterFetch2("users/me", token))
+    console.log(await matterFetch("users/me", token))
   }
 }
 
