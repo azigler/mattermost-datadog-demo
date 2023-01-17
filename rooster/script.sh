@@ -24,10 +24,11 @@ while getopts 'tdciup:v' flag; do
   esac
 done
 
-echo "Initializing Mattermost for demo..."
-sleep 25
-
 echo -e "Setting up Mattermost with ...\n Team name: $team_name\n Team display name: $team_display_name\n Channel name: $channel_name\n Channel display name: $channel_display_name"
+
+echo "Initializing Mattermost for demo..."
+sleep 35
+
 docker exec mattermost mmctl --local team create --display-name $team_display_name --name $team_name
 docker exec mattermost mmctl --local channel create --team $team_name --display-name $channel_display_name --name $channel_name
 

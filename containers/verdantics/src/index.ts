@@ -11,7 +11,7 @@ const init = async () => {
     path: "/",
     handler: () => {
       console.info("almost out of plants")
-      return "Hello Worldlol!"
+      return "Hello World!"
     },
   })
 

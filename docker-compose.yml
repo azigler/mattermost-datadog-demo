@@ -66,13 +66,13 @@ services:
       - /proc/:/host/proc/:ro
       - /sys/fs/cgroup/:/host/sys/fs/cgroup:ro
       - /var/lib/docker/containers:/var/lib/docker/containers:ro
-  plantalytics:
-    container_name: plantalytics
+  verdantics:
+    container_name: verdantics
     image: node:lts-hydrogen
     restart: unless-stopped
-    working_dir: /plantalytics
+    working_dir: /verdantics
     command: bash -c "yarn install && yarn start"
     ports:
       - 8005:8005
     volumes:
-      - ./containers/plantalytics:/plantalytics
+      - ./containers/verdantics:/verdantics

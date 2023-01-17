@@ -19,7 +19,7 @@ const init = () => __awaiter(void 0, void 0, void 0, function* () {
         path: "/",
         handler: () => {
             console.info("almost out of plants");
-            return "Hello Worldlol!";
+            return "Hello World!";
         },
     });
     yield server.start();

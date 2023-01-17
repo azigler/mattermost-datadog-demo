@@ -1,6 +1,6 @@
 containers/**
-!containers/plantalytics
-!containers/plantalytics/**
+!containers/verdantics
+!containers/verdantics/**
 !containers/mattermost
 !containers/mattermost/credentials
 !containers/mattermost/credentials/**
@@ -8,3 +8,5 @@ containers/**
 node_modules
 .TODO
 .DS_Store
+token.txt
+password.txt
