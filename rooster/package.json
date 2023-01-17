@@ -7,7 +7,7 @@
     "start": "run-p start:*",
     "start:tsc": "tsc --watch -p .",
     "start:serve": "nodemon -e js -w dist",
-    "setup": "./script.sh -d Verdantics -i 'Datadog Setup'"
+    "setup": "./script.sh"
   },
   "author": "Andrew Zigler",
   "license": "MIT",
