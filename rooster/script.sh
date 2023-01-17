@@ -1,9 +1,9 @@
 #!/bin/bash
 
 team_name="main"
-team_display_name="Mattermost"
-channel_name="example"
-channel_display_name="Example"
+team_display_name="Verdantics"
+channel_name="datadog-alerts"
+channel_display_name="Datadog Alerts"
 user_name="root"
 user_password="$(openssl rand -base64 14)"
 
@@ -38,7 +38,7 @@ docker exec mattermost mmctl --local team users add $team_name $user_name
 docker exec mattermost mmctl --local channel users add $team_name:$channel_name $user_name
 
 export MM_URL="$(gp url 8065)"
-echo -e "\n\n  YOU CAN NOW LOG IN TO MATTERMOST AT $MM_URL\n        username:  $user_name\n        password:  $user_password\n"
+echo -e "\n===========================\n\n  YOU CAN NOW LOG IN TO MATTERMOST AT $MM_URL\n\n        username:  $user_name\n        password:  $user_password\n\n===========================\n"
 
 cd data/users
 
