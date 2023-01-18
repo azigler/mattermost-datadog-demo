@@ -4,7 +4,7 @@ import {
   USER_DEFAULTS,
   matterGet,
   matterPut,
-  matterPost
+  matterPost,
   MM_URL,
 } from "../utils"
 import { Action } from "."
@@ -90,11 +90,10 @@ export class User {
             await matterPost("posts", token, {
               channel_id: act.channel || this.defaults.channel,
               message: act.text,
-              })
-            await new Promise(resolve => setTimeout(resolve, 10000));
+            })
+            await new Promise((resolve) => setTimeout(resolve, 10000))
           }
         }
-        
       }
     }
   }
