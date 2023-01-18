@@ -20,18 +20,13 @@ exports.USER_DEFAULTS = {
     channel: "example",
 };
 exports.MM_URL = "http://localhost:8065";
-function matterFetch(endpoint, token, options = {
-    method: "GET",
-    body: undefined,
-}) {
+function matterFetch(endpoint, token) {
     return __awaiter(this, void 0, void 0, function* () {
         const api = `${exports.MM_URL}/api/v4/`;
         const data = yield fetch(`${api}${endpoint}`, {
             headers: new Headers({
                 Authorization: `Bearer ${token}`,
             }),
-            method: options.method,
-            body: options.body,
         });
         if (data.status === 200) {
             const text = yield data.text();

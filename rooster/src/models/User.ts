@@ -1,6 +1,7 @@
 import path from "path"
-import { readUserFile, USER_DEFAULTS, matterFetch } from "../utils"
+import { readUserFile, USER_DEFAULTS, matterFetch, MM_URL } from "../utils"
 import { Action } from "."
+import { exec } from "child_process"
 
 /*
 for user
@@ -50,8 +51,6 @@ export class User {
       "blob"
     )
 
-    console.log(avatar)
-
     if (config) {
       this.defaults = config.defaults || false
       if (!this.defaults) {
@@ -92,8 +91,6 @@ export class User {
       const data = JSON.parse(me)
       this.id = data.id
 
-      console.log(this)
-
       if (this.avatar) {
         this.setAvatar(this.avatar)
       }
@@ -105,12 +102,29 @@ export class User {
 
     const body = new FormData()
     body.append("image", png)
-    console.log(body.has("image"))
+    //console.log(body.has("image"))
 
-    const av = await matterFetch(`users/${this.id}/image`, this.token, {
+    /*const av = await matterFetch(`users/${this.id}/image`, this.token, {
       method: "POST",
       body,
+      contentType: "multipart/form-data; boundary=&",
     })
-    console.log("results", av)
+    console.log("results", av)*/
+
+    console.log("here")
+    exec(
+      `curl -F 'image=@./data/users/${this.name}/avatar.png' -H 'Authorization: Bearer ${this.token}' ${MM_URL}/api/v4/users/${this.id}/image`,
+      (error, stdout, stderr) => {
+        if (error) {
+          console.log(`error: ${error.message}`)
+          return
+        }
+        if (stderr) {
+          console.log(`stderr: ${stderr}`)
+          return
+        }
+        console.log(`stdout: ${stdout}`)
+      }
+    )
   }
 }

@@ -8,24 +8,12 @@ export const USER_DEFAULTS = {
 
 export const MM_URL = "http://localhost:8065"
 
-export async function matterFetch(
-  endpoint: string,
-  token: string,
-  options: {
-    method: string
-    body?: any
-  } = {
-    method: "GET",
-    body: undefined,
-  }
-) {
+export async function matterFetch(endpoint: string, token: string) {
   const api = `${MM_URL}/api/v4/`
   const data = await fetch(`${api}${endpoint}`, {
     headers: new Headers({
       Authorization: `Bearer ${token}`,
     }),
-    method: options.method,
-    body: options.body,
   })
 
   if (data.status === 200) {

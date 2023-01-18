@@ -10,7 +10,7 @@
   "scripts": {
     "start": "echo 'Please enter your DD_API_KEY (https://github.com/azigler/mattermost-datadog-demo#install--usage):' && read ddkey && export DD_API_KEY=$ddkey && docker compose up -d",
     "stop": "export DD_API_KEY=0 && docker compose down",
-    "postinstall": "yarn start && cd ./rooster && yarn setup",
+    "postinstall": "nvm use lts/hydrogen && yarn start && cd ./rooster && yarn setup",
     "clean": "rm -rf ./containers/mattermost && rm -rf ./containers/postgres"
   }
 }
