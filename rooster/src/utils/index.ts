@@ -8,9 +8,28 @@ export const USER_DEFAULTS = {
 
 export const MM_URL = "http://localhost:8065"
 
-export async function matterFetch(endpoint: string, token: string) {
+export async function matterGet(endpoint: string, token: string) {
   const api = `${MM_URL}/api/v4/`
   const data = await fetch(`${api}${endpoint}`, {
+    headers: new Headers({
+      Authorization: `Bearer ${token}`,
+    }),
+  })
+
+  if (data.status === 200) {
+    const text = await data.text()
+    return text
+  } else {
+    const text = await data.text()
+    console.log(text)
+    return false
+  }
+}
+
+export async function matterPut(endpoint: string, token: string) {
+  const api = `${MM_URL}/api/v4/`
+  const data = await fetch(`${api}${endpoint}`, {
+    method: "PUT",
     headers: new Headers({
       Authorization: `Bearer ${token}`,
     }),

@@ -52,7 +52,7 @@ class User {
     }
     fetchMe(token) {
         return __awaiter(this, void 0, void 0, function* () {
-            const me = yield (0, utils_1.matterFetch)("users/me", token);
+            const me = yield (0, utils_1.matterGet)("users/me", token);
             if (me) {
                 const data = JSON.parse(me);
                 this.id = data.id;
@@ -60,7 +60,7 @@ class User {
                     this.setAvatar();
                 }
                 if (this.defaults && this.defaults.nickname) {
-                    const nickname = yield (0, utils_1.matterFetch)(`users/${this.id}/patch`, token);
+                    const me = yield (0, utils_1.matterGet)(`users/${this.id}/patch`, token);
                 }
             }
         });

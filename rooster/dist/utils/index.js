@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.userArray = exports.getAllUsers = exports.readUserFile = exports.matterFetch = exports.MM_URL = exports.USER_DEFAULTS = void 0;
+exports.userArray = exports.getAllUsers = exports.readUserFile = exports.matterPut = exports.matterGet = exports.MM_URL = exports.USER_DEFAULTS = void 0;
 const fs_1 = __importDefault(require("fs"));
 const path_1 = __importDefault(require("path"));
 exports.USER_DEFAULTS = {
@@ -20,7 +20,7 @@ exports.USER_DEFAULTS = {
     channel: "example",
 };
 exports.MM_URL = "http://localhost:8065";
-function matterFetch(endpoint, token) {
+function matterGet(endpoint, token) {
     return __awaiter(this, void 0, void 0, function* () {
         const api = `${exports.MM_URL}/api/v4/`;
         const data = yield fetch(`${api}${endpoint}`, {
@@ -39,7 +39,28 @@ function matterFetch(endpoint, token) {
         }
     });
 }
-exports.matterFetch = matterFetch;
+exports.matterGet = matterGet;
+function matterPut(endpoint, token) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const api = `${exports.MM_URL}/api/v4/`;
+        const data = yield fetch(`${api}${endpoint}`, {
+            method: "PUT",
+            headers: new Headers({
+                Authorization: `Bearer ${token}`,
+            }),
+        });
+        if (data.status === 200) {
+            const text = yield data.text();
+            return text;
+        }
+        else {
+            const text = yield data.text();
+            console.log(text);
+            return false;
+        }
+    });
+}
+exports.matterPut = matterPut;
 function readUserFile(filepath, type = "") {
     let contents;
     try {

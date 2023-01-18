@@ -1,5 +1,5 @@
 import path from "path"
-import { readUserFile, USER_DEFAULTS, matterFetch, MM_URL } from "../utils"
+import { readUserFile, USER_DEFAULTS, matterGet, MM_URL } from "../utils"
 import { Action } from "."
 import { exec } from "child_process"
 
@@ -60,7 +60,7 @@ export class User {
   }
 
   async fetchMe(token: string) {
-    const me = await matterFetch("users/me", token)
+    const me = await matterGet("users/me", token)
     if (me) {
       const data = JSON.parse(me)
       this.id = data.id
@@ -70,7 +70,7 @@ export class User {
       }
 
       if (this.defaults && this.defaults.nickname) {
-        const nickname = await matterFetch(`users/${this.id}/patch`, token)
+        const me = await matterGet(`users/${this.id}/patch`, token)
       }
     }
   }

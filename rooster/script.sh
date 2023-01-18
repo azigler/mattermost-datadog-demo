@@ -55,3 +55,5 @@ for user in * ; do
     IFS=: read -r token name <<< "$(docker exec mattermost mmctl token generate $user demo)"
     echo $token > ./$user/token.txt
 done
+
+touch ../../dist/restart.js
