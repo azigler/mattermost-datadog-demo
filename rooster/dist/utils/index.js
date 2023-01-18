@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.userArray = exports.getAllUsers = exports.readUserFile = exports.matterPut = exports.matterGet = exports.MM_URL = exports.USER_DEFAULTS = void 0;
+exports.userArray = exports.getAllUsers = exports.readUserFile = exports.matterPost = exports.matterPut = exports.matterGet = exports.MM_URL = exports.USER_DEFAULTS = void 0;
 const fs_1 = __importDefault(require("fs"));
 const path_1 = __importDefault(require("path"));
 exports.USER_DEFAULTS = {
@@ -40,7 +40,7 @@ function matterGet(endpoint, token) {
     });
 }
 exports.matterGet = matterGet;
-function matterPut(endpoint, token) {
+function matterPut(endpoint, token, body) {
     return __awaiter(this, void 0, void 0, function* () {
         const api = `${exports.MM_URL}/api/v4/`;
         const data = yield fetch(`${api}${endpoint}`, {
@@ -48,6 +48,7 @@ function matterPut(endpoint, token) {
             headers: new Headers({
                 Authorization: `Bearer ${token}`,
             }),
+            body: JSON.stringify(body),
         });
         if (data.status === 200) {
             const text = yield data.text();
@@ -61,6 +62,28 @@ function matterPut(endpoint, token) {
     });
 }
 exports.matterPut = matterPut;
+function matterPost(endpoint, token, body) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const api = `${exports.MM_URL}/api/v4/`;
+        const data = yield fetch(`${api}${endpoint}`, {
+            method: "POST",
+            headers: new Headers({
+                Authorization: `Bearer ${token}`,
+            }),
+            body: JSON.stringify(body),
+        });
+        if (data.status === 200) {
+            const text = yield data.text();
+            return text;
+        }
+        else {
+            const text = yield data.text();
+            console.log(text);
+            return false;
+        }
+    });
+}
+exports.matterPost = matterPost;
 function readUserFile(filepath, type = "") {
     let contents;
     try {

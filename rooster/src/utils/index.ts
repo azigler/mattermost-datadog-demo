@@ -26,13 +26,42 @@ export async function matterGet(endpoint: string, token: string) {
   }
 }
 
-export async function matterPut(endpoint: string, token: string) {
+export async function matterPut(
+  endpoint: string,
+  token: string,
+  body?: object
+) {
   const api = `${MM_URL}/api/v4/`
   const data = await fetch(`${api}${endpoint}`, {
     method: "PUT",
     headers: new Headers({
       Authorization: `Bearer ${token}`,
     }),
+    body: JSON.stringify(body),
+  })
+
+  if (data.status === 200) {
+    const text = await data.text()
+    return text
+  } else {
+    const text = await data.text()
+    console.log(text)
+    return false
+  }
+}
+
+export async function matterPost(
+  endpoint: string,
+  token: string,
+  body?: object
+) {
+  const api = `${MM_URL}/api/v4/`
+  const data = await fetch(`${api}${endpoint}`, {
+    method: "POST",
+    headers: new Headers({
+      Authorization: `Bearer ${token}`,
+    }),
+    body: JSON.stringify(body),
   })
 
   if (data.status === 200) {

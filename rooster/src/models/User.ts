@@ -1,5 +1,12 @@
 import path from "path"
-import { readUserFile, USER_DEFAULTS, matterGet, MM_URL } from "../utils"
+import {
+  readUserFile,
+  USER_DEFAULTS,
+  matterGet,
+  matterPut,
+  matterPost
+  MM_URL,
+} from "../utils"
 import { Action } from "."
 import { exec } from "child_process"
 
@@ -70,7 +77,24 @@ export class User {
       }
 
       if (this.defaults && this.defaults.nickname) {
-        const me = await matterGet(`users/${this.id}/patch`, token)
+        const me = await matterPut(`users/${this.id}/patch`, token, {
+          nickname: this.defaults.nickname,
+        })
+      }
+    }
+
+    if (this.actions && this.defaults) {
+      for (const act of this.actions) {
+        switch (act.type) {
+          case "post": {
+            await matterPost("posts", token, {
+              channel_id: act.channel || this.defaults.channel,
+              message: act.text,
+              })
+            await new Promise(resolve => setTimeout(resolve, 10000));
+          }
+        }
+        
       }
     }
   }
