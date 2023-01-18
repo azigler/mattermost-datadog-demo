@@ -3,24 +3,6 @@ import { readUserFile, USER_DEFAULTS, matterFetch, MM_URL } from "../utils"
 import { Action } from "."
 import { exec } from "child_process"
 
-/*
-for user
-  grab their config
-  create a user in memory
-  store their token
-  if they have an avatar file, set as profile picture
-
-User
-  name
-  token
-  defaults
-    team
-    channel
-  Action[]
-    use user's default unless overridden
-    for action's text, parse newlines and escape backticks, convert to string literal
-*/
-
 export class User {
   name: string
   id: string
@@ -30,6 +12,7 @@ export class User {
     | {
         team: string
         channel: string
+        nickname?: string
       }
     | false
   actions: Action[] | false
@@ -46,9 +29,8 @@ export class User {
     const token = readUserFile(
       path.join(__dirname, `../../data/users/${name}/token.txt`)
     )
-    const avatar = readUserFile(
-      path.join(__dirname, `../../data/users/${name}/avatar.png`),
-      "blob"
+    this.avatar = readUserFile(
+      path.join(__dirname, `../../data/users/${name}/avatar.png`)
     )
 
     if (config) {
@@ -69,16 +51,8 @@ export class User {
       this.actions = false
     }
 
-    if (avatar) {
-      this.avatar = avatar
-    } else {
-      this.avatar = false
-    }
-
     if (token) {
-      this.token = token
-      // set prof pic
-
+      this.token = token.trim()
       this.fetchMe(token)
     } else {
       this.token = false
@@ -92,26 +66,16 @@ export class User {
       this.id = data.id
 
       if (this.avatar) {
-        this.setAvatar(this.avatar)
+        this.setAvatar()
+      }
+
+      if (this.defaults && this.defaults.nickname) {
+        const nickname = await matterFetch(`users/${this.id}/patch`, token)
       }
     }
   }
 
-  async setAvatar(png: Blob) {
-    if (!this.token || !this.avatar) return false
-
-    const body = new FormData()
-    body.append("image", png)
-    //console.log(body.has("image"))
-
-    /*const av = await matterFetch(`users/${this.id}/image`, this.token, {
-      method: "POST",
-      body,
-      contentType: "multipart/form-data; boundary=&",
-    })
-    console.log("results", av)*/
-
-    console.log("here")
+  async setAvatar() {
     exec(
       `curl -F 'image=@./data/users/${this.name}/avatar.png' -H 'Authorization: Bearer ${this.token}' ${MM_URL}/api/v4/users/${this.id}/image`,
       (error, stdout, stderr) => {

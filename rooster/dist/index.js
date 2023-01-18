@@ -9,4 +9,3 @@ for (const user of utils_1.userArray) {
         name: user,
     }));
 }
-console.log(users);

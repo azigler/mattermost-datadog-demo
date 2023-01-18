@@ -29,22 +29,12 @@ export async function matterFetch(endpoint: string, token: string) {
 export function readUserFile(filepath: string, type: string = "") {
   let contents
 
-  if (type !== "blob") {
-    try {
-      contents = fs.readFileSync(filepath, {
-        encoding: "utf8",
-      })
-    } catch {
-      return false
-    }
-  } else {
-    try {
-      contents = fs.readFileSync(filepath)
-      contents = Buffer.from(contents)
-      return contents
-    } catch {
-      return false
-    }
+  try {
+    contents = fs.readFileSync(filepath, {
+      encoding: "utf8",
+    })
+  } catch {
+    return false
   }
 
   switch (type) {

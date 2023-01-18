@@ -1,7 +1,8 @@
 {
   "defaults": {
     "team": "main",
-    "channel": "datadog-alerts"
+    "channel": "datadog-alerts",
+    "nickname": "Zeek"
   },
   "actions": [
     {

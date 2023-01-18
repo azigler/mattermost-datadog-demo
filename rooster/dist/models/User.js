@@ -17,23 +17,6 @@ const path_1 = __importDefault(require("path"));
 const utils_1 = require("../utils");
 const _1 = require(".");
 const child_process_1 = require("child_process");
-/*
-for user
-  grab their config
-  create a user in memory
-  store their token
-  if they have an avatar file, set as profile picture
-
-User
-  name
-  token
-  defaults
-    team
-    channel
-  Action[]
-    use user's default unless overridden
-    for action's text, parse newlines and escape backticks, convert to string literal
-*/
 class User {
     constructor({ name }) {
         this.name = name;
@@ -41,7 +24,7 @@ class User {
         this.avatar = false;
         const config = (0, utils_1.readUserFile)(path_1.default.join(__dirname, `../../data/users/${name}/config.json`), "json");
         const token = (0, utils_1.readUserFile)(path_1.default.join(__dirname, `../../data/users/${name}/token.txt`));
-        const avatar = (0, utils_1.readUserFile)(path_1.default.join(__dirname, `../../data/users/${name}/avatar.png`), "blob");
+        this.avatar = (0, utils_1.readUserFile)(path_1.default.join(__dirname, `../../data/users/${name}/avatar.png`));
         if (config) {
             this.defaults = config.defaults || false;
             if (!this.defaults) {
@@ -59,15 +42,8 @@ class User {
             this.defaults = false;
             this.actions = false;
         }
-        if (avatar) {
-            this.avatar = avatar;
-        }
-        else {
-            this.avatar = false;
-        }
         if (token) {
-            this.token = token;
-            // set prof pic
+            this.token = token.trim();
             this.fetchMe(token);
         }
         else {
@@ -81,25 +57,16 @@ class User {
                 const data = JSON.parse(me);
                 this.id = data.id;
                 if (this.avatar) {
-                    this.setAvatar(this.avatar);
+                    this.setAvatar();
+                }
+                if (this.defaults && this.defaults.nickname) {
+                    const nickname = yield (0, utils_1.matterFetch)(`users/${this.id}/patch`, token);
                 }
             }
         });
     }
-    setAvatar(png) {
+    setAvatar() {
         return __awaiter(this, void 0, void 0, function* () {
-            if (!this.token || !this.avatar)
-                return false;
-            const body = new FormData();
-            body.append("image", png);
-            //console.log(body.has("image"))
-            /*const av = await matterFetch(`users/${this.id}/image`, this.token, {
-              method: "POST",
-              body,
-              contentType: "multipart/form-data; boundary=&",
-            })
-            console.log("results", av)*/
-            console.log("here");
             (0, child_process_1.exec)(`curl -F 'image=@./data/users/${this.name}/avatar.png' -H 'Authorization: Bearer ${this.token}' ${utils_1.MM_URL}/api/v4/users/${this.id}/image`, (error, stdout, stderr) => {
                 if (error) {
                     console.log(`error: ${error.message}`);

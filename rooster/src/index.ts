@@ -12,5 +12,3 @@ for (const user of userArray) {
     })
   )
 }
-
-console.log(users)

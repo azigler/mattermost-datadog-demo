@@ -42,25 +42,13 @@ function matterFetch(endpoint, token) {
 exports.matterFetch = matterFetch;
 function readUserFile(filepath, type = "") {
     let contents;
-    if (type !== "blob") {
-        try {
-            contents = fs_1.default.readFileSync(filepath, {
-                encoding: "utf8",
-            });
-        }
-        catch (_a) {
-            return false;
-        }
+    try {
+        contents = fs_1.default.readFileSync(filepath, {
+            encoding: "utf8",
+        });
     }
-    else {
-        try {
-            contents = fs_1.default.readFileSync(filepath);
-            contents = Buffer.from(contents);
-            return contents;
-        }
-        catch (_b) {
-            return false;
-        }
+    catch (_a) {
+        return false;
     }
     switch (type) {
         case "json":
