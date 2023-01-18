@@ -26,7 +26,7 @@ done
 
 echo -e "Setting up Mattermost with ...\n Team name: $team_name\n Team display name: $team_display_name\n Channel name: $channel_name\n Channel display name: $channel_display_name"
 
-echo "Initializing Mattermost for demo..."
+echo "Initializing Mattermost for demo. This will take about 30 seconds..."
 sleep 35
 
 docker exec mattermost mmctl --local team create --display-name $team_display_name --name $team_name
