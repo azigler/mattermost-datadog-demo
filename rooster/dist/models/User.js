@@ -60,7 +60,22 @@ class User {
                     this.setAvatar();
                 }
                 if (this.defaults && this.defaults.nickname) {
-                    const me = yield (0, utils_1.matterGet)(`users/${this.id}/patch`, token);
+                    const me = yield (0, utils_1.matterPut)(`users/${this.id}/patch`, token, {
+                        nickname: this.defaults.nickname,
+                    });
+                }
+            }
+            if (this.actions && this.defaults) {
+                for (const act of this.actions) {
+                    switch (act.type) {
+                        case "post": {
+                            yield (0, utils_1.matterPost)("posts", token, {
+                                channel_id: act.channel || this.defaults.channel,
+                                message: act.text,
+                            });
+                            yield new Promise((resolve) => setTimeout(resolve, 10000));
+                        }
+                    }
                 }
             }
         });

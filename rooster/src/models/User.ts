@@ -2,6 +2,7 @@ import path from "path"
 import {
   readUserFile,
   USER_DEFAULTS,
+  POST_WAIT_SECONDS,
   matterGet,
   matterPut,
   matterPost,
@@ -19,7 +20,7 @@ export class User {
     | {
         team: string
         channel: string
-        nickname?: string
+        username?: string
       }
     | false
   actions: Action[] | false
@@ -76,9 +77,9 @@ export class User {
         this.setAvatar()
       }
 
-      if (this.defaults && this.defaults.nickname) {
-        const me = await matterPut(`users/${this.id}/patch`, token, {
-          nickname: this.defaults.nickname,
+      if (this.defaults && this.defaults.username) {
+        await matterPut(`users/${this.id}/patch`, token, {
+          username: this.defaults.username,
         })
       }
     }
@@ -91,7 +92,41 @@ export class User {
               channel_id: act.channel || this.defaults.channel,
               message: act.text,
             })
-            await new Promise((resolve) => setTimeout(resolve, 10000))
+            await new Promise((resolve) =>
+              setTimeout(resolve, POST_WAIT_SECONDS * 1000)
+            )
+          }
+          case "reaction-post": {
+            const post = await matterPost("posts", token, {
+              channel_id: act.channel || this.defaults.channel,
+              message: act.text,
+            })
+            if (post) {
+              await new Promise((resolve) => {
+                const checkForReaction = async () => {
+                  let reacted = false
+                  while (reacted === false) {
+                    const p = await matterGet(
+                      `posts/${JSON.parse(post).id}`,
+                      token
+                    )
+                    if (p) {
+                      let parsed = JSON.parse(p)
+                      if (parsed.metadata.emojis) {
+                        resolve(parsed.metadata.emojis)
+                      }
+                    } else {
+                      await new Promise((resolve) => setTimeout(resolve, 1000))
+                    }
+                  }
+
+                  resolve
+                }
+
+                JSON.parse(post).id
+                setTimeout(checkForReaction, POST_WAIT_SECONDS * 1000)
+              })
+            }
           }
         }
       }

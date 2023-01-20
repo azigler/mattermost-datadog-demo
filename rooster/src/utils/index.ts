@@ -8,6 +8,8 @@ export const USER_DEFAULTS = {
 
 export const MM_URL = "http://localhost:8065"
 
+export const POST_WAIT_SECONDS = 10
+
 export async function matterGet(endpoint: string, token: string) {
   const api = `${MM_URL}/api/v4/`
   const data = await fetch(`${api}${endpoint}`, {

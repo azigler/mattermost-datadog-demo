@@ -2,7 +2,7 @@
   "defaults": {
     "team": "main",
     "channel": "datadog-alerts",
-    "nickname": "Zeek"
+    "username": "Zeek"
   },
   "actions": [
     {
@@ -11,8 +11,8 @@
       "text": "Hey @root, it's me, Zeke! We're so glad you're finally here. Can you help us set up alerts with the new Datadog Agent monitoring our containers? I'm going to move discussion over to [Datadog Alerts channel](${MM_URL}/main/channels/datadog-alerts) to reduce noise here..."
     },
     {
-      "type": "post",
-      "text": "Hey @root, over here! :) :tada: To get started, log into your Datadog account and navigate to the **[Integrations > Webhooks](https://app.datadoghq.com/integrations/webhooks)** page. The alert we need to create is for the `plantalytics` API we just rolled out. If the API encounters some edge cases that ours engineers have identified, we want to get notified so we can investigate the causes."
+      "type": "reaction-post",
+      "text": "Hey @root, over here! :) :tada: To get started, log into your Datadog account and navigate to the **[Integrations > Webhooks](https://app.datadoghq.com/integrations/webhooks)** page. The alert we need to create is for the `plantalytics` API we just rolled out. If the API encounters some edge cases that ours engineers have identified, we want to get notified so we can investigate the causes. React to this message with 👍 to continue."
     },
     {
       "type": "post",
