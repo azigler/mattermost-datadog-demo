@@ -2,17 +2,17 @@
   "defaults": {
     "team": "main",
     "channel": "datadog-alerts",
-    "username": "Zeek"
+    "first_name": "Zeek"
   },
   "actions": [
     {
       "type": "post",
       "channel": "town-square",
-      "text": "Hey @root, it's me, Zeke! We're so glad you're finally here. Can you help us set up alerts with the new Datadog Agent monitoring our containers? I'm going to move discussion over to [Datadog Alerts channel](${MM_URL}/main/channels/datadog-alerts) to reduce noise here..."
+      "text": "Hey @root, it's me, Zeek! We're so glad you're finally here. Can you help us set up alerts with the new Datadog Agent monitoring our containers? I'm going to move discussion over to the [Datadog Alerts channel](${MM_URL}/main/channels/datadog-alerts) to reduce noise here..."
     },
     {
       "type": "reaction-post",
-      "text": "Hey @root, over here! :) :tada: To get started, log into your Datadog account and navigate to the **[Integrations > Webhooks](https://app.datadoghq.com/integrations/webhooks)** page. The alert we need to create is for the `plantalytics` API we just rolled out. If the API encounters some edge cases that ours engineers have identified, we want to get notified so we can investigate the causes. React to this message with 👍 to continue."
+      "text": "Hey @root, over here! :) :tada: To get started, log into your Datadog account and navigate to the **[Integrations > Webhooks](https://app.datadoghq.com/integrations/webhooks)** page. The alert we need to create is for the `plantalytics` API we just rolled out. If the API encounters some edge cases that ours engineers have identified, we want to get notified so we can investigate the causes. React to this message (like with 👍) to continue."
     },
     {
       "type": "post",
@@ -20,7 +20,7 @@
     },
     {
       "type": "post",
-      "text": "Next, **create a new webhook on Datadog** and name it `mattermost-integration`. You can paste in the webhook URL. For the payload, let's use a formatted message attachment in Mattermost: ```json\n{\n\"attachments\": [\n{\n\"fallback\": \"$EVENT_MSG\",\n\"color\": \"#FF8000\",\n\"pretext\": \"This is optional pretext that shows above the attachment.\",\n\"text\": \"$EVENT_MSG\",\n\"author_name\": \"Datadog\",\n\"author_icon\": \"https://mattermost.com/wp-content/uploads/2022/02/icon_WS.png\",\n\"author_link\": \"https://mattermost.org/\",\n\"title\": \"🚨 $EVENT_TYPE\",\n\"title_link\": \"https://developers.mattermost.com/integrate/reference/message-attachments/\",\n\"fields\": [\n    {\n        \"short\":true,\n        \"title\":\"Last Updated\",\n        \"value\":\"$LAST_UPDATED\"\n    },\n    {\n        \"short\":true,\n        \"title\":\"ID\",\n        \"value\":\"$ID\"\n    },\n    {\n        \"short\":false,\n        \"title\":\"Organization\",\n        \"value\":\"$ORG_NAME\"\n    }\n],\n\"image_url\": \"https://mattermost.com/wp-content/uploads/2022/02/icon_WS.png\"\n            }\n        ]\n      }\n      ```\"\"\n    }\n  ]"
+      "text": "Next, **create a new webhook on Datadog** and name it `mattermost-integration`. You can paste in the webhook URL. For the payload, let's use a formatted message attachment in Mattermost: ${PLAYBOOK_ATTACHMENT}"
     },
     {
       "type": "post",

@@ -78,7 +78,7 @@ export class User {
       }
 
       if (this.defaults && this.defaults.first_name) {
-        const result = await matterPut(`users/${this.id}/patch`, token, {
+        await matterPut(`users/${this.id}/patch`, token, {
           first_name: this.defaults.first_name,
         })
       }
