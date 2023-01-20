@@ -3,7 +3,7 @@ import path from "path"
 
 export const USER_DEFAULTS = {
   team: "main",
-  channel: "example",
+  channel: "datadog-alerts",
 }
 
 export const MM_URL = "http://localhost:8065"
@@ -18,7 +18,7 @@ export async function matterGet(endpoint: string, token: string) {
     }),
   })
 
-  if (data.status === 200) {
+  if (data.status >= 200 && data.status < 300) {
     const text = await data.text()
     return text
   } else {
@@ -42,7 +42,7 @@ export async function matterPut(
     body: JSON.stringify(body),
   })
 
-  if (data.status === 200) {
+  if (data.status >= 200 && data.status < 300) {
     const text = await data.text()
     return text
   } else {
@@ -66,7 +66,7 @@ export async function matterPost(
     body: JSON.stringify(body),
   })
 
-  if (data.status === 200) {
+  if (data.status >= 200 && data.status < 300) {
     const text = await data.text()
     return text
   } else {

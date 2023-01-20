@@ -20,7 +20,7 @@ export class User {
     | {
         team: string
         channel: string
-        username?: string
+        first_name?: string
       }
     | false
   actions: Action[] | false
@@ -77,56 +77,138 @@ export class User {
         this.setAvatar()
       }
 
-      if (this.defaults && this.defaults.username) {
-        await matterPut(`users/${this.id}/patch`, token, {
-          username: this.defaults.username,
+      if (this.defaults && this.defaults.first_name) {
+        const result = await matterPut(`users/${this.id}/patch`, token, {
+          first_name: this.defaults.first_name,
         })
       }
     }
 
     if (this.actions && this.defaults) {
+      let defaultTeam: any = await matterGet(
+        `teams/name/${this.defaults.team}`,
+        token
+      )
+      let defaultChannel: any
+
+      if (defaultTeam) {
+        defaultTeam = JSON.parse(defaultTeam).id
+
+        defaultChannel = await matterGet(
+          `teams/${defaultTeam}/channels/name/${this.defaults.channel}`,
+          token
+        )
+        if (defaultChannel) {
+          defaultChannel = JSON.parse(defaultChannel).id
+        }
+      }
+
       for (const act of this.actions) {
+        let thisChannel: any
+        if (act.channel) {
+          thisChannel = await matterGet(
+            `teams/${defaultTeam}/channels/name/${act.channel}`,
+            token
+          )
+          if (thisChannel) {
+            thisChannel = JSON.parse(thisChannel).id
+          }
+        } else {
+          thisChannel = defaultChannel
+        }
+
+        function parseText(text: any) {
+          let gpurl = ""
+          exec(`gp url 8065`, (error, stdout, stderr) => {
+            gpurl = stdout
+          })
+
+          let p = text.replace("${MM_URL}", gpurl)
+          p = p.replace(
+            "${PLAYBOOK_ATTACHMENT}",
+            `
+\`\`\`bash
+{
+  "attachments": [
+      {
+          "fallback": "$EVENT_MSG",
+          "color": "#FF8000",
+          "pretext": "This is optional pretext that shows above the attachment.",
+          "text": "$EVENT_MSG",
+          "author_name": "Datadog",
+          "author_icon": "https://mattermost.com/wp-content/uploads/2022/02/icon_WS.png",
+          "author_link": "https://mattermost.org/",
+          "title": "🚨 $EVENT_TYPE",
+          "title_link": "https://developers.mattermost.com/integrate/reference/message-attachments/",
+          "fields": [
+              {
+                  "short":true,
+                  "title":"Last Updated",
+                  "value":"$LAST_UPDATED"
+              },
+              {
+                  "short":true,
+                  "title":"ID",
+                  "value":"$ID"
+              },
+              {
+                  "short":false,
+                  "title":"Organization",
+                  "value":"$ORG_NAME"
+              }
+          ],
+          "image_url": "https://mattermost.com/wp-content/uploads/2022/02/icon_WS.png"
+      }
+  ]
+}
+\`\`\`
+`
+          )
+
+          return p
+        }
+
+        let parsedActionText = parseText(act.text)
+
         switch (act.type) {
           case "post": {
             await matterPost("posts", token, {
-              channel_id: act.channel || this.defaults.channel,
-              message: act.text,
+              channel_id: thisChannel,
+              message: parsedActionText,
             })
             await new Promise((resolve) =>
               setTimeout(resolve, POST_WAIT_SECONDS * 1000)
             )
+            break
           }
           case "reaction-post": {
             const post = await matterPost("posts", token, {
-              channel_id: act.channel || this.defaults.channel,
-              message: act.text,
+              channel_id: thisChannel,
+              message: parsedActionText,
             })
+            let interval: any
             if (post) {
               await new Promise((resolve) => {
                 const checkForReaction = async () => {
-                  let reacted = false
-                  while (reacted === false) {
-                    const p = await matterGet(
-                      `posts/${JSON.parse(post).id}`,
-                      token
-                    )
-                    if (p) {
-                      let parsed = JSON.parse(p)
-                      if (parsed.metadata.emojis) {
-                        resolve(parsed.metadata.emojis)
-                      }
-                    } else {
-                      await new Promise((resolve) => setTimeout(resolve, 1000))
+                  const p = await matterGet(
+                    `posts/${JSON.parse(post).id}`,
+                    token
+                  )
+                  if (p) {
+                    let parsed = JSON.parse(p)
+                    if (parsed.metadata.reactions) {
+                      clearInterval(interval)
+                      resolve(parsed.metadata.reactions)
                     }
+                  } else {
+                    await new Promise((resolve) => setTimeout(resolve, 1000))
                   }
-
-                  resolve
                 }
 
-                JSON.parse(post).id
-                setTimeout(checkForReaction, POST_WAIT_SECONDS * 1000)
+                interval = setInterval(checkForReaction, 1000)
               })
             }
+            break
           }
         }
       }
