@@ -12,7 +12,7 @@
     },
     {
       "type": "reaction-post",
-      "text": "Hey @root, over here! :) :tada: To get started, log into your Datadog account and navigate to the **[Integrations > Webhooks](https://app.datadoghq.com/integrations/webhooks)** page. The alert we need to create is for the `plantalytics` API we just rolled out. If the API encounters some edge cases that ours engineers have identified, we want to get notified so we can investigate the causes."
+      "text": "Hey @root, over here! :) :tada: To get started, log into your Datadog account and navigate to the **[Integrations > Webhooks](https://app.datadoghq.com/integrations/webhooks)** page. The alert we need to create is for the `verdantics` API we just rolled out to customers. If the API encounters some edge cases that ours engineers have identified, we want to get notified so we can investigate the causes."
     },
     {
       "type": "reaction-post",
@@ -24,7 +24,7 @@
     },
     {
       "type": "reaction-post",
-      "text": "Now, navigate to the **[Monitors > New Monitor > Logs](https://app.datadoghq.com/monitors/create/log)** page to create this new log monitor. The Datadog Agent is already online and scanning our containers, you check out the `docker-compose.yml` file in the repo to see how it's configured but that's not necessary for now."
+      "text": "Now, navigate to the **[Monitors > New Monitor > Logs](https://app.datadoghq.com/monitors/create/log)** page to create this new log monitor. The Datadog Agent is already online and scanning our containers, you can check out the [`docker-compose.yml`](https://github.com/azigler/mattermost-datadog-demo/blob/main/docker-compose.yml) file in the repo to see how it's configured, but that's not necessary for now."
     },
     {
       "type": "reaction-post",
@@ -35,8 +35,8 @@
       "text": "Under **Set alert conditions**, change it to be `above or equal to` and set the **Alert Threshold** to `1`"
     },
     {
-      "type": "preaction-postost",
-      "text": "Under **Notify your team**, set the monitor title to whatever you like and in the body add `@mattermost-integration` so that this monitor sends the alert we formatted for this channel. You should test the notification to make sure it sends here, then save it."
+      "type": "post",
+      "text": "Under **Notify your team**, set the monitor title to whatever you like and in the body add `@mattermost-integration` so that this monitor sends the alert we formatted for this channel. You should test the monitor to make sure it sends here, then save it."
     }
   ]
 }
