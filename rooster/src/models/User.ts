@@ -184,7 +184,9 @@ export class User {
           case "reaction-post": {
             const post = await matterPost("posts", token, {
               channel_id: thisChannel,
-              message: parsedActionText,
+              message:
+                parsedActionText +
+                " React to this message with 👍 to continue.",
             })
             let interval: any
             if (post) {
