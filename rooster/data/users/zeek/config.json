@@ -20,11 +20,11 @@
     },
     {
       "type": "post",
-      "text": "Next, **create a new webhook on Datadog** and name it `mattermost-integration`. You can paste in the webhook URL. For the payload, let's use a formatted message attachment in Mattermost: ${PLAYBOOK_ATTACHMENT}"
+      "text": "Next, **[create a new webhook on Datadog](https://app.datadoghq.com/integrations/webhooks)** and name it `mattermost-integration`. Paste in the webhook URL we just copied. For the payload, let's use a [message attachment](https://developers.mattermost.com/integrate/reference/message-attachments/) formatted for Mattermost: ${PLAYBOOK_ATTACHMENT}"
     },
     {
       "type": "post",
-      "text": "Next, navigate to the **[Monitors > New Monitor > Logs](https://app.datadoghq.com/monitors/create/log)** page to create this new log monitor. The Datadog Agent is already online and scanning our containers, you check out the `docker-compose.yml` file in the repo to see how it's configured but that's not necessary for now."
+      "text": "Now, navigate to the **[Monitors > New Monitor > Logs](https://app.datadoghq.com/monitors/create/log)** page to create this new log monitor. The Datadog Agent is already online and scanning our containers, you check out the `docker-compose.yml` file in the repo to see how it's configured but that's not necessary for now."
     },
     {
       "type": "post",

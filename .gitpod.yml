@@ -9,8 +9,8 @@ tasks:
     openMode: "split-right"
 ports:
   - port: 8065
-    onOpen: open-browser
+    onOpen: open-preview
     visibility: public
   - port: 8005
-    onOpen: open-browser
+    onOpen: open-preview
     visibility: public
